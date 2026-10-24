@@ -1,0 +1,26 @@
+name: balance
+
+on:
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: lonestar-balance
+  cancel-in-progress: false
+
+jobs:
+  balance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node balance.mjs
+        env:
+          WDRCON_URL: ${{ secrets.WDRCON_URL }}
+          WDRCON_PASSWORD: ${{ secrets.WDRCON_PASSWORD }}
+          BALANCE_MS: "15000"
+          BALANCE_FOR_MS: "19800000"
