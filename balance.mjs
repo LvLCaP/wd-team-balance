@@ -4,6 +4,8 @@ const MESSAGES = [
   "Долучайся до спільноти в Discord: discord.gg/9rGM7Vps84",
   "You can chat in any language.",
   "Важкі образи заборонені.",
+  "Перевірити баланс догтегів та витратити їх ви можете на нашому сайті: wardogs-help.com",
+  "Приємної гри на wardogs-help.com",
 ];
 const OPEN = ["Valkyra", "Manticore"];
 const CAP = 50;
