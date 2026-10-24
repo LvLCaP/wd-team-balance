@@ -1,3 +1,10 @@
+const MESSAGES = [
+  "Привілеї на цей сервер можна придбати: wardogs-help.com",
+  "Наш сайт: https://wardogs-help.com",
+  "Долучайся до спільноти в Discord: discord.gg/9rGM7Vps84",
+  "You can chat in any language.",
+  "Важкі образи заборонені.",
+];
 const OPEN = ["Valkyra", "Manticore"];
 const CAP = 50;
 const step = Math.min(60_000, Math.max(5_000, Number(process.env.BALANCE_MS) || 15_000));
@@ -65,10 +72,27 @@ if (!base || !password) {
 }
 
 let lastReport = 0;
+let announcedSlot = -1;
+
+async function announce() {
+  const slot = Math.floor(Date.now() / (15 * 60 * 1000));
+  if (slot === announcedSlot) return;
+  const message = MESSAGES[slot % MESSAGES.length];
+  const res = await fetch(`${base}/v1/broadcast`, {
+    method: "POST",
+    headers: headers(true),
+    body: JSON.stringify({ message }),
+  });
+  if (!res.ok) throw new Error(`broadcast ${res.status}`);
+  announcedSlot = slot;
+  console.log(`broadcast ${message}`);
+}
+
 while (Date.now() < until) {
   try {
     const list = await players();
     const result = await balance(list);
+    await announce();
     if (result.moved || Date.now() - lastReport > 5 * 60 * 1000) {
       console.log(`online ${result.online} moved ${result.moved} ${JSON.stringify(result.counts)}`);
       lastReport = Date.now();
