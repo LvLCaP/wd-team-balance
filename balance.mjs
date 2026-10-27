@@ -6,6 +6,7 @@ const MESSAGES = [
   "Важкі образи заборонені.",
   "Перевірити баланс догтегів та витратити їх ви можете на нашому сайті: wardogs-help.com",
   "Приємної гри на wardogs-help.com",
+  "Отримуй догтеги за сидіння — купуй прохідку на wardogs-help.com",
 ];
 const OPEN = ["Valkyra", "Manticore"];
 const CAP = 50;
